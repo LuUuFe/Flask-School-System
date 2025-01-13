@@ -8,6 +8,7 @@ app.config.from_pyfile('config.py')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+  
   return render_template('index.html')
 
 if __name__ == '__main__':
