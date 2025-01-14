@@ -1,70 +1,15 @@
-from flask import Flask, render_template, redirect, url_for, flash, request
-from flask_sqlalchemy import SQLAlchemy
-from forms import StudentForm, TeacherForm, DisciplineForm, ClassForm
+from flask import Blueprint, render_template, redirect, url_for, flash
+from app import db
+from app.models import Student, Teacher, Discipline, Class
+from app.forms import StudentForm, TeacherForm, DisciplineForm, ClassForm
 
-app = Flask(__name__)
+main = Blueprint('main', __name__)
 
-app.config.from_pyfile('config.py')
-
-db = SQLAlchemy(app)
-
-class Student(db.Model):
-  __tablename__ = 'students'
-  
-  id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(100), nullable=False)
-  registration = db.Column(db.String(50), unique=True, nullable=False)
-  date_of_birth = db.Column(db.String(20), nullable=False)
-  gender = db.Column(db.String(10), nullable=False)
-  address = db.Column(db.String(255), nullable=False)
-  phone = db.Column(db.String(15), nullable=False)
-  email = db.Column(db.String(120), unique=True, nullable=False)
-
-class Teacher(db.Model):
-  __tablename__ = 'teachers'
-  
-  id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(100), nullable=False)
-  registration = db.Column(db.String(50), unique=True, nullable=False)
-  date_of_birth = db.Column(db.String(20), nullable=False)
-  gender = db.Column(db.String(10), nullable=False)
-  address = db.Column(db.String(255), nullable=False)
-  phone = db.Column(db.String(15), nullable=False)
-  email = db.Column(db.String(120), unique=True, nullable=False)
-  
-  disciplines = db.relationship('Discipline', backref='teacher', lazy=True)
-
-class Discipline(db.Model):
-  __tablename__ = 'disciplines'
-  
-  id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(100), nullable=False)
-  code = db.Column(db.String(50), unique=True, nullable=False)
-  workload = db.Column(db.String(20), nullable=False)
-  
-  teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable=False)
-  
-  classes = db.relationship('Class', backref='discipline', lazy=True)
-
-class Class(db.Model):
-  __tablename__ = 'classes'
-  
-  id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(100), nullable=False)
-  code = db.Column(db.String(50), unique=True, nullable=False)
-  
-  discipline_id = db.Column(db.Integer, db.ForeignKey('disciplines.id'), nullable=False)
-  
-  teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable=False)
-
-with app.app_context():
-  db.create_all()
-
-@app.route('/', methods=['GET', 'POST'])
+@main.route('/', methods=['GET', 'POST'])
 def index():
   return render_template('index.html')
 
-@app.route('/student', methods=['GET', 'POST'])
+@main.route('/student', methods=['GET', 'POST'])
 def student():
   form = StudentForm()
   
@@ -97,7 +42,7 @@ def student():
   students = Student.query.all()
   return render_template('student.html', form=form, students=students)
 
-@app.route('/teacher', methods=['GET', 'POST'])
+@main.route('/teacher', methods=['GET', 'POST'])
 def teacher():
   form = TeacherForm()
 
@@ -130,7 +75,7 @@ def teacher():
   teachers = Teacher.query.all()
   return render_template('teacher.html', form=form, teachers=teachers)
 
-@app.route('/discipline', methods=['GET', 'POST'])
+@main.route('/discipline', methods=['GET', 'POST'])
 def discipline():
   form = DisciplineForm()
   form.teacher.choices = [(teacher.id, teacher.name) for teacher in Teacher.query.all()]
@@ -158,7 +103,7 @@ def discipline():
   disciplines = Discipline.query.all()
   return render_template('discipline.html', form=form, disciplines=disciplines)
 
-@app.route('/class', methods=['GET', 'POST'])
+@main.route('/class', methods=['GET', 'POST'])
 def class_():
   form = ClassForm()
   form.discipline.choices = [(discipline.id, discipline.name) for discipline in Discipline.query.all()]
@@ -186,6 +131,3 @@ def class_():
 
   classes = Class.query.all()
   return render_template('class.html', form=form, classes=classes)
-
-if __name__ == '__main__':
-  app.run(debug=True)

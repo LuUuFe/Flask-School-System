@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, DateField, SelectField
 from wtforms.validators import DataRequired
+from app.models import Teacher
 
 class StudentForm(FlaskForm):
   name = StringField('Enter your name', validators=[DataRequired()])
@@ -27,8 +28,13 @@ class DisciplineForm(FlaskForm):
   name = StringField('Enter a name', validators=[DataRequired()])
   code = StringField('Enter a code', validators=[DataRequired()])
   workload = StringField('Enter a workload', validators=[DataRequired()])
-  teacher = SelectField('Choose a teacher', coerce=int, validators=[DataRequired()])
+  teacher = SelectField('Choose a teacher', coerce=int, default=None)
   submit = SubmitField('Submit')
+
+  def __init__(self, *args, **kwargs):
+    super(DisciplineForm, self).__init__(*args, **kwargs)
+    self.teacher.choices = [(teacher.id, teacher.name) for teacher in Teacher.query.all()]
+    self.teacher.choices.insert(0, (None, "No teacher"))
 
 class ClassForm(FlaskForm):
   name = StringField('Enter a name', validators=[DataRequired()])
