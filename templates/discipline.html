@@ -18,37 +18,22 @@
 
       <div class="mb-3">
         {{ form.name.label(class="form-label") }}
-        {{ form.name(class="form-control", placeholder="Enter your name") }}
+        {{ form.name(class="form-control", placeholder="Enter the discipline name") }}
       </div>
 
       <div class="mb-3">
-        {{ form.registration.label(class="form-label") }}
-        {{ form.registration(class="form-control", placeholder="Enter your registration") }}
+        {{ form.code.label(class="form-label") }}
+        {{ form.code(class="form-control", placeholder="Enter the discipline code") }}
       </div>
 
       <div class="mb-3">
-        {{ form.dateOfBirth.label(class="form-label") }}
-        {{ form.dateOfBirth(class="form-control", type="date", placeholder="Enter your date of birth") }}
+        {{ form.workload.label(class="form-label") }}
+        {{ form.workload(class="form-control", placeholder="Enter the workload") }}
       </div>
 
       <div class="mb-3">
-        {{ form.gender.label(class="form-label") }}
-        {{ form.gender(class="form-control", placeholder="Enter your gender") }}
-      </div>
-
-      <div class="mb-3">
-        {{ form.address.label(class="form-label") }}
-        {{ form.address(class="form-control", placeholder="Enter your address") }}
-      </div>
-
-      <div class="mb-3">
-        {{ form.phone.label(class="form-label") }}
-        {{ form.phone(class="form-control", placeholder="Enter your phone") }}
-      </div>
-
-      <div class="mb-3">
-        {{ form.email.label(class="form-label") }}
-        {{ form.email(class="form-control", placeholder="Enter your email") }}
+        {{ form.teacher.label(class="form-label") }}
+        {{ form.teacher(class="form-select") }}
       </div>
 
       <div class="d-grid">
@@ -68,10 +53,10 @@
     {% endif %}
     {% endwith %}
 
-    <h2 class="mt-5 mb-3 text-center">Registered students</h2>
+    <h2 class="mt-5 mb-3 text-center">Registered Disciplines</h2>
     <ul class="list-group">
-      {% for student in students %}
-      <li class="list-group-item">{{ student.name }}</li>
+      {% for discipline in disciplines %}
+      <li class="list-group-item">{{ discipline.name }}</li>
       {% endfor %}
     </ul>
   </div>

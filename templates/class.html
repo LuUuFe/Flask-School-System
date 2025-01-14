@@ -18,37 +18,22 @@
 
       <div class="mb-3">
         {{ form.name.label(class="form-label") }}
-        {{ form.name(class="form-control", placeholder="Enter your name") }}
+        {{ form.name(class="form-control", placeholder="Enter the class name") }}
       </div>
 
       <div class="mb-3">
-        {{ form.registration.label(class="form-label") }}
-        {{ form.registration(class="form-control", placeholder="Enter your registration") }}
+        {{ form.code.label(class="form-label") }}
+        {{ form.code(class="form-control", placeholder="Enter the class code") }}
       </div>
 
       <div class="mb-3">
-        {{ form.dateOfBirth.label(class="form-label") }}
-        {{ form.dateOfBirth(class="form-control", type="date", placeholder="Enter your date of birth") }}
+        {{ form.discipline.label(class="form-label") }}
+        {{ form.discipline(class="form-select") }}
       </div>
 
       <div class="mb-3">
-        {{ form.gender.label(class="form-label") }}
-        {{ form.gender(class="form-control", placeholder="Enter your gender") }}
-      </div>
-
-      <div class="mb-3">
-        {{ form.address.label(class="form-label") }}
-        {{ form.address(class="form-control", placeholder="Enter your address") }}
-      </div>
-
-      <div class="mb-3">
-        {{ form.phone.label(class="form-label") }}
-        {{ form.phone(class="form-control", placeholder="Enter your phone") }}
-      </div>
-
-      <div class="mb-3">
-        {{ form.email.label(class="form-label") }}
-        {{ form.email(class="form-control", placeholder="Enter your email") }}
+        {{ form.teacher.label(class="form-label") }}
+        {{ form.teacher(class="form-select") }}
       </div>
 
       <div class="d-grid">
@@ -68,12 +53,13 @@
     {% endif %}
     {% endwith %}
 
-    <h2 class="mt-5 mb-3 text-center">Registered students</h2>
+    <h2 class="mt-5 mb-3 text-center">Registered Classes</h2>
     <ul class="list-group">
-      {% for student in students %}
-      <li class="list-group-item">{{ student.name }}</li>
+      {% for class_ in classes %}
+      <li class="list-group-item">{{ class_.name }}</li>
       {% endfor %}
     </ul>
+
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
