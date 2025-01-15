@@ -37,7 +37,7 @@ def student():
     
     flash('Student registered successfully!', 'success')
 
-    return redirect(url_for('student'))
+    return redirect(url_for('main.student'))
   
   students = Student.query.all()
   return render_template('student.html', form=form, students=students)
@@ -54,6 +54,7 @@ def teacher():
     address = form.address.data
     phone = form.phone.data
     email = form.email.data
+    discipline_id = form.discipline.data
 
     newTeacher = Teacher(
       name=name,
@@ -62,7 +63,8 @@ def teacher():
       gender=gender,
       address=address,
       phone=phone,
-      email=email
+      email=email,
+      discipline_id=discipline_id
     )
 
     db.session.add(newTeacher)
@@ -70,7 +72,7 @@ def teacher():
 
     flash('Teacher registered successfully!', 'success')
 
-    return redirect(url_for('teacher'))
+    return redirect(url_for('main.teacher'))
 
   teachers = Teacher.query.all()
   return render_template('teacher.html', form=form, teachers=teachers)
@@ -78,7 +80,6 @@ def teacher():
 @main.route('/discipline', methods=['GET', 'POST'])
 def discipline():
   form = DisciplineForm()
-  form.teacher.choices = [(teacher.id, teacher.name) for teacher in Teacher.query.all()]
 
   if form.validate_on_submit():
     name = form.name.data
@@ -98,7 +99,7 @@ def discipline():
 
     flash('Discipline registered successfully!', 'success')
 
-    return redirect(url_for('discipline'))
+    return redirect(url_for('main.discipline'))
 
   disciplines = Discipline.query.all()
   return render_template('discipline.html', form=form, disciplines=disciplines)
@@ -106,8 +107,6 @@ def discipline():
 @main.route('/class', methods=['GET', 'POST'])
 def class_():
   form = ClassForm()
-  form.discipline.choices = [(discipline.id, discipline.name) for discipline in Discipline.query.all()]
-  form.teacher.choices = [(teacher.id, teacher.name) for teacher in Teacher.query.all()]
 
   if form.validate_on_submit():
     name = form.name.data
@@ -127,7 +126,7 @@ def class_():
 
     flash('Class registered successfully!', 'success')
 
-    return redirect(url_for('class_'))
+    return redirect(url_for('main.class'))
 
   classes = Class.query.all()
   return render_template('class.html', form=form, classes=classes)

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, DateField, SelectField
 from wtforms.validators import DataRequired
-from app.models import Teacher
+from app.models import Teacher, Discipline
 
 class StudentForm(FlaskForm):
   name = StringField('Enter your name', validators=[DataRequired()])
@@ -21,8 +21,13 @@ class TeacherForm(FlaskForm):
   address = StringField('Enter your address', validators=[DataRequired()])
   phone = StringField('Enter your phone', validators=[DataRequired()])
   email = StringField('Enter your email', validators=[DataRequired()])
-  discipline = SelectField('Choose a discipline', coerce=int, validators=[DataRequired()])
-  submit = SubmitField('Submit')
+  discipline = SelectField('Choose a discipline', default=None, coerce=int)
+  submit = SubmitField('Submit')  
+
+  def __init__(self, *args, **kwargs):
+    super(TeacherForm, self).__init__(*args, **kwargs)
+    self.discipline.choices = [(discipline.id, discipline.name) for discipline in Discipline.query.all()]
+    self.discipline.choices.insert(0, (0, "No discipline"))
 
 class DisciplineForm(FlaskForm):
   name = StringField('Enter a name', validators=[DataRequired()])
@@ -34,11 +39,18 @@ class DisciplineForm(FlaskForm):
   def __init__(self, *args, **kwargs):
     super(DisciplineForm, self).__init__(*args, **kwargs)
     self.teacher.choices = [(teacher.id, teacher.name) for teacher in Teacher.query.all()]
-    self.teacher.choices.insert(0, (None, "No teacher"))
+    self.teacher.choices.insert(0, (0, "No teacher"))
 
 class ClassForm(FlaskForm):
   name = StringField('Enter a name', validators=[DataRequired()])
   code = StringField('Enter a code', validators=[DataRequired()])
-  discipline = SelectField('Choose a discipline', coerce=int, validators=[DataRequired()])
-  teacher = SelectField('Choose a teacher', coerce=int, validators=[DataRequired()])
+  discipline = SelectField('Choose a discipline', default=None, coerce=int)
+  teacher = SelectField('Choose a teacher', default=None, coerce=int)
   submit = SubmitField('Submit')
+
+  def __init__(self, *args, **kwargs):
+    super(ClassForm, self).__init__(*args, **kwargs)
+    self.discipline.choices = [(discipline.id, discipline.name) for discipline in Discipline.query.all()]
+    self.discipline.choices.insert(0, (0, 'No discipline'))
+    self.teacher.choices = [(teacher.id, teacher.name) for teacher in Teacher.query.all()]
+    self.teacher.choices.insert(0, (0, 'No teacher'))
