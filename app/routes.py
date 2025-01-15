@@ -54,7 +54,7 @@ def teacher():
     address = form.address.data
     phone = form.phone.data
     email = form.email.data
-    discipline_id = form.discipline.data
+    list_discipline_id = form.discipline.data
 
     newTeacher = Teacher(
       name=name,
@@ -70,12 +70,14 @@ def teacher():
 
     db.session.flush()
 
-    newTeacherDiscipline = TeacherDiscipline(
-      teacher_id=newTeacher.id,
-      discipline_id=discipline_id
-    )
+    for discipline_id in list_discipline_id:
+      if discipline_id != 0:
+        newTeacherDiscipline = TeacherDiscipline(
+          teacher_id=newTeacher.id,
+          discipline_id=discipline_id
+        )
 
-    db.session.add(newTeacherDiscipline)
+        db.session.add(newTeacherDiscipline)
 
     db.session.commit()
 
@@ -94,7 +96,7 @@ def discipline():
     name = form.name.data
     code = form.code.data
     workload = form.workload.data
-    teacher_id = form.teacher.data
+    list_teacher_id = form.teacher.data
 
     newDiscipline = Discipline(
       name=name,
@@ -106,12 +108,14 @@ def discipline():
 
     db.session.flush()
 
-    newTeacherDiscipline = TeacherDiscipline(
-      teacher_id=teacher_id,
-      discipline_id=newDiscipline.id
-    )
+    for teacher_id in list_teacher_id:
+      if teacher_id != 0:
+        newTeacherDiscipline = TeacherDiscipline(
+          teacher_id=teacher_id,
+          discipline_id=newDiscipline.id
+        )
 
-    db.session.add(newTeacherDiscipline)
+        db.session.add(newTeacherDiscipline)
 
     db.session.commit()
 

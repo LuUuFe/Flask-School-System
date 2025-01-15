@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DateField, SelectField
+from wtforms import StringField, SubmitField, DateField, SelectMultipleField
 from wtforms.validators import DataRequired
 from app.models import Teacher, Discipline
 
@@ -21,7 +21,7 @@ class TeacherForm(FlaskForm):
   address = StringField('Enter your address', validators=[DataRequired()])
   phone = StringField('Enter your phone', validators=[DataRequired()])
   email = StringField('Enter your email', validators=[DataRequired()])
-  discipline = SelectField('Choose a discipline', default=None, coerce=int)
+  discipline = SelectMultipleField('Choose a discipline', default=None, coerce=int)
   submit = SubmitField('Submit')  
 
   def __init__(self, *args, **kwargs):
@@ -33,7 +33,7 @@ class DisciplineForm(FlaskForm):
   name = StringField('Enter a name', validators=[DataRequired()])
   code = StringField('Enter a code', validators=[DataRequired()])
   workload = StringField('Enter a workload', validators=[DataRequired()])
-  teacher = SelectField('Choose a teacher', coerce=int, default=None)
+  teacher = SelectMultipleField('Choose a teacher', coerce=int, default=None)
   submit = SubmitField('Submit')
 
   def __init__(self, *args, **kwargs):
@@ -44,8 +44,8 @@ class DisciplineForm(FlaskForm):
 class CourseForm(FlaskForm):
   name = StringField('Enter a name', validators=[DataRequired()])
   code = StringField('Enter a code', validators=[DataRequired()])
-  discipline = SelectField('Choose a discipline', default=None, coerce=int)
-  teacher = SelectField('Choose a teacher', default=None, coerce=int)
+  discipline = SelectMultipleField('Choose a discipline', default=None, coerce=int)
+  teacher = SelectMultipleField('Choose a teacher', default=None, coerce=int)
   submit = SubmitField('Submit')
 
   def __init__(self, *args, **kwargs):
