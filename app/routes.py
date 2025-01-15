@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from app import db
-from app.models import Student, Teacher, Discipline, Course, TeacherDiscipline
+from app.models import Student, Teacher, Discipline, Course, TeacherDiscipline, TeacherCourse, DisciplineCourse
 from app.forms import StudentForm, TeacherForm, DisciplineForm, CourseForm
+from itertools import zip_longest
 
 main = Blueprint('main', __name__)
 
@@ -21,6 +22,7 @@ def student():
     address = form.address.data
     phone = form.phone.data
     email = form.email.data
+    course_id = form.course.data
 
     newStudent = Student(
       name=name, 
@@ -29,7 +31,8 @@ def student():
       gender=gender, 
       address=address, 
       phone=phone, 
-      email=email
+      email=email,
+      course_id=course_id
       )
 
     db.session.add(newStudent)
@@ -55,6 +58,7 @@ def teacher():
     phone = form.phone.data
     email = form.email.data
     list_discipline_id = form.discipline.data
+    list_course_id = form.course.data
 
     newTeacher = Teacher(
       name=name,
@@ -70,15 +74,21 @@ def teacher():
 
     db.session.flush()
 
-    for discipline_id in list_discipline_id:
+    for discipline_id, course_id in zip_longest(list_discipline_id, list_course_id, fillvalue=0):
       if discipline_id != 0:
         newTeacherDiscipline = TeacherDiscipline(
           teacher_id=newTeacher.id,
           discipline_id=discipline_id
         )
-
         db.session.add(newTeacherDiscipline)
 
+      if course_id != 0:
+        newTeacherCourse = TeacherCourse(
+          teacher_id=newTeacher.id,
+          course_id=course_id
+        )
+        db.session.add(newTeacherCourse)
+    
     db.session.commit()
 
     flash('Teacher registered successfully!', 'success')
@@ -97,6 +107,7 @@ def discipline():
     code = form.code.data
     workload = form.workload.data
     list_teacher_id = form.teacher.data
+    list_course_id = form.course.data
 
     newDiscipline = Discipline(
       name=name,
@@ -108,14 +119,20 @@ def discipline():
 
     db.session.flush()
 
-    for teacher_id in list_teacher_id:
+    for teacher_id, course_id in zip_longest(list_teacher_id, list_course_id, fillvalue=0):
       if teacher_id != 0:
         newTeacherDiscipline = TeacherDiscipline(
           teacher_id=teacher_id,
           discipline_id=newDiscipline.id
         )
-
         db.session.add(newTeacherDiscipline)
+
+      if course_id != 0:
+        newDisciplineCourse = DisciplineCourse(
+          discipline_id=newDiscipline.id,
+          course_id=course_id
+        )
+        db.session.add(newDisciplineCourse)
 
     db.session.commit()
 
@@ -133,17 +150,39 @@ def course():
   if form.validate_on_submit():
     name = form.name.data
     code = form.code.data
-    discipline_id = form.discipline.data
-    teacher_id = form.teacher.data
+    list_student_id=form.student.data
+    list_teacher_id=form.teacher.data
+    list_discipline_id=form.discipline.data
 
     newCourse = Course(
       name=name,
-      code=code,
-      discipline_id=discipline_id,
-      teacher_id=teacher_id
+      code=code
     )
 
     db.session.add(newCourse)
+
+    db.session.flush()
+
+    for student_id, teacher_id, discipline_id in zip_longest(list_student_id, list_teacher_id, list_discipline_id, fillvalue=0):
+      if student_id != 0:
+        updateStudent = Student.query.get_or_404(student_id)
+        updateStudent.course_id = newCourse.id
+        db.session.add(updateStudent)
+
+      if teacher_id != 0:
+        newTeacherCourse = TeacherCourse(
+          teacher_id=teacher_id,
+          course_id=newCourse.id
+        )
+        db.session.add(newTeacherCourse)
+
+      if discipline_id != 0:
+        newDisciplineCourse = DisciplineCourse(
+          discipline_id=discipline_id,
+          course_id=newCourse.id
+        )
+        db.session.add(newDisciplineCourse)
+
     db.session.commit()
 
     flash('Course registered successfully!', 'success')
