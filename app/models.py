@@ -1,5 +1,11 @@
 from app import db
 
+class TeacherDiscipline(db.Model):
+  __tablename__ = 'teacher_discipline'
+
+  teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), primary_key=True)
+  discipline_id = db.Column(db.Integer, db.ForeignKey('disciplines.id'), primary_key=True)
+
 class Student(db.Model):
   __tablename__ = 'students'
   
@@ -23,8 +29,8 @@ class Teacher(db.Model):
   address = db.Column(db.String(255), nullable=False)
   phone = db.Column(db.String(15), nullable=False)
   email = db.Column(db.String(120), unique=True, nullable=False)
-  
-  disciplines = db.relationship('Discipline', backref='teacher', lazy=True)
+
+  disciplines = db.relationship('Discipline', secondary='teacher_discipline', back_populates='teachers')
 
 class Discipline(db.Model):
   __tablename__ = 'disciplines'
@@ -34,10 +40,8 @@ class Discipline(db.Model):
   code = db.Column(db.String(50), unique=True, nullable=False)
   workload = db.Column(db.String(20), nullable=False)
   
-  teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable=False)
+  teachers = db.relationship('Teacher', secondary='teacher_discipline', back_populates='disciplines')
   
-  classes = db.relationship('Class', backref='discipline', lazy=True)
-
 class Class(db.Model):
   __tablename__ = 'classes'
   

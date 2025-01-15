@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from app import db
-from app.models import Student, Teacher, Discipline, Class
+from app.models import Student, Teacher, Discipline, Class, TeacherDiscipline
 from app.forms import StudentForm, TeacherForm, DisciplineForm, ClassForm
 
 main = Blueprint('main', __name__)
@@ -63,11 +63,20 @@ def teacher():
       gender=gender,
       address=address,
       phone=phone,
-      email=email,
-      discipline_id=discipline_id
+      email=email
     )
 
     db.session.add(newTeacher)
+
+    db.session.flush()
+
+    newTeacherDiscipline = TeacherDiscipline(
+      teacher_id=newTeacher.id,
+      discipline_id=discipline_id
+    )
+
+    db.session.add(newTeacherDiscipline)
+
     db.session.commit()
 
     flash('Teacher registered successfully!', 'success')
@@ -90,11 +99,20 @@ def discipline():
     newDiscipline = Discipline(
       name=name,
       code=code,
-      workload=workload,
-      teacher_id=teacher_id
+      workload=workload
     )
 
     db.session.add(newDiscipline)
+
+    db.session.flush()
+
+    newTeacherDiscipline = TeacherDiscipline(
+      teacher_id=teacher_id,
+      discipline_id=newDiscipline.id
+    )
+
+    db.session.add(newTeacherDiscipline)
+
     db.session.commit()
 
     flash('Discipline registered successfully!', 'success')
