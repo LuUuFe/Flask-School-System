@@ -41,7 +41,7 @@ class DisciplineForm(FlaskForm):
     self.teacher.choices = [(teacher.id, teacher.name) for teacher in Teacher.query.all()]
     self.teacher.choices.insert(0, (0, "No teacher"))
 
-class ClassForm(FlaskForm):
+class CourseForm(FlaskForm):
   name = StringField('Enter a name', validators=[DataRequired()])
   code = StringField('Enter a code', validators=[DataRequired()])
   discipline = SelectField('Choose a discipline', default=None, coerce=int)
@@ -49,7 +49,7 @@ class ClassForm(FlaskForm):
   submit = SubmitField('Submit')
 
   def __init__(self, *args, **kwargs):
-    super(ClassForm, self).__init__(*args, **kwargs)
+    super(CourseForm, self).__init__(*args, **kwargs)
     self.discipline.choices = [(discipline.id, discipline.name) for discipline in Discipline.query.all()]
     self.discipline.choices.insert(0, (0, 'No discipline'))
     self.teacher.choices = [(teacher.id, teacher.name) for teacher in Teacher.query.all()]

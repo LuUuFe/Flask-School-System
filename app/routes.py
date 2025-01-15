@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from app import db
-from app.models import Student, Teacher, Discipline, Class, TeacherDiscipline
-from app.forms import StudentForm, TeacherForm, DisciplineForm, ClassForm
+from app.models import Student, Teacher, Discipline, Course, TeacherDiscipline
+from app.forms import StudentForm, TeacherForm, DisciplineForm, CourseForm
 
 main = Blueprint('main', __name__)
 
@@ -122,9 +122,9 @@ def discipline():
   disciplines = Discipline.query.all()
   return render_template('discipline.html', form=form, disciplines=disciplines)
 
-@main.route('/class', methods=['GET', 'POST'])
-def class_():
-  form = ClassForm()
+@main.route('/course', methods=['GET', 'POST'])
+def course():
+  form = CourseForm()
 
   if form.validate_on_submit():
     name = form.name.data
@@ -132,19 +132,19 @@ def class_():
     discipline_id = form.discipline.data
     teacher_id = form.teacher.data
 
-    newClass = Class(
+    newCourse = Course(
       name=name,
       code=code,
       discipline_id=discipline_id,
       teacher_id=teacher_id
     )
 
-    db.session.add(newClass)
+    db.session.add(newCourse)
     db.session.commit()
 
-    flash('Class registered successfully!', 'success')
+    flash('Course registered successfully!', 'success')
 
-    return redirect(url_for('main.class'))
+    return redirect(url_for('main.course'))
 
-  classes = Class.query.all()
-  return render_template('class.html', form=form, classes=classes)
+  courses = Course.query.all()
+  return render_template('course.html', form=form, courses=courses)
