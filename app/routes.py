@@ -140,7 +140,7 @@ def discipline():
 
     return redirect(url_for('main.discipline'))
 
-  disciplines = Discipline.query.join(TeacherDiscipline, Discipline.id == TeacherDiscipline.discipline_id).all()
+  disciplines = Discipline.query.outerjoin(TeacherDiscipline, Discipline.id == TeacherDiscipline.discipline_id).outerjoin(DisciplineCourse, Discipline.id == DisciplineCourse.discipline_id).all()
   
   return render_template('pages/discipline.html', form=form, disciplines=disciplines)
 
