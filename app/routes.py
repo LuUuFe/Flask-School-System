@@ -8,7 +8,7 @@ main = Blueprint('main', __name__)
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-  return render_template('index.html')
+  return render_template('nav.html')
 
 @main.route('/student', methods=['GET', 'POST'])
 def student():
@@ -43,7 +43,7 @@ def student():
     return redirect(url_for('main.student'))
   
   students = Student.query.all()
-  return render_template('student.html', form=form, students=students)
+  return render_template('pages/student.html', form=form, students=students)
 
 @main.route('/teacher', methods=['GET', 'POST'])
 def teacher():
@@ -96,7 +96,7 @@ def teacher():
     return redirect(url_for('main.teacher'))
 
   teachers = Teacher.query.all()
-  return render_template('teacher.html', form=form, teachers=teachers)
+  return render_template('pages/teacher.html', form=form, teachers=teachers)
 
 @main.route('/discipline', methods=['GET', 'POST'])
 def discipline():
@@ -141,9 +141,8 @@ def discipline():
     return redirect(url_for('main.discipline'))
 
   disciplines = Discipline.query.join(TeacherDiscipline, Discipline.id == TeacherDiscipline.discipline_id).all()
-  [[print(teacher.id) for teacher in discipline.teachers] for discipline in disciplines]
-
-  return render_template('discipline.html', form=form, disciplines=disciplines)
+  
+  return render_template('pages/discipline.html', form=form, disciplines=disciplines)
 
 @main.route('/course', methods=['GET', 'POST'])
 def course():
@@ -192,4 +191,4 @@ def course():
     return redirect(url_for('main.course'))
 
   courses = Course.query.all()
-  return render_template('course.html', form=form, courses=courses)
+  return render_template('pages/course.html', form=form, courses=courses)

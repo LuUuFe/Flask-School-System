@@ -59,7 +59,7 @@
     {% endwith %}
 
     <h2 class="mt-5 mb-3 text-center">Registered Disciplines</h2>
-    <table class="table">
+    <table id="disciplineTable" class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -73,7 +73,8 @@
       <tbody>
         {% for discipline in disciplines %}
         <tr>
-          <th scope="row">{{ discipline.name }}</th>
+          <th scope="row">{{ discipline.id }}</th>
+          <th>{{ discipline.name }}</th>
           <td>{{ discipline.code }}</td>
           <td>{{ discipline.workload }}</td>
           <td>

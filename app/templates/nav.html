@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="px-4 py-5 my-5 text-center">
+  <img class="d-block mx-auto mb-4" src="https://www.ifms.edu.br/marcaifms.png" alt="Logo IFMS" width="100">
+  <h1 class="display-5 fw-bold text-body-emphasis">School System</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">The school system developed in Python with Flask is a modern and efficient web application,
+      designed to manage several essential functionalities of an educational institution. The main objective of the
+      system is to facilitate the organization of information about students, teachers, classes and disciplines,
+      offering an intuitive and responsive interface.</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <a type="button" href="{{ url_for('main.student') }}" class="btn btn-primary btn-lg px-4 gap-3">Students</a>
+      <a type="button" href="{{ url_for('main.teacher') }}" class="btn btn-secondary btn-lg px-4">Teachers</a>
+      <a type="button" href="{{ url_for('main.discipline') }}" class="btn btn-danger btn-lg px-4">Disciplines</a>
+      <a type="button" href="{{ url_for('main.course') }}" class="btn btn-success btn-lg px-4">Courses</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
