@@ -140,7 +140,9 @@ def discipline():
 
     return redirect(url_for('main.discipline'))
 
-  disciplines = Discipline.query.all()
+  disciplines = Discipline.query.join(TeacherDiscipline, Discipline.id == TeacherDiscipline.discipline_id).all()
+  [[print(teacher.id) for teacher in discipline.teachers] for discipline in disciplines]
+
   return render_template('discipline.html', form=form, disciplines=disciplines)
 
 @main.route('/course', methods=['GET', 'POST'])

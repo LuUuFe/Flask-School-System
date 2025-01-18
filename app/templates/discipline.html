@@ -59,11 +59,40 @@
     {% endwith %}
 
     <h2 class="mt-5 mb-3 text-center">Registered Disciplines</h2>
-    <ul class="list-group">
-      {% for discipline in disciplines %}
-      <li class="list-group-item">{{ discipline.name }}</li>
-      {% endfor %}
-    </ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Code</th>
+          <th scope="col">Workload</th>
+          <th scope="col">Teachers</th>
+          <th scope="col">Courses</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for discipline in disciplines %}
+        <tr>
+          <th scope="row">{{ discipline.name }}</th>
+          <td>{{ discipline.code }}</td>
+          <td>{{ discipline.workload }}</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Teachers
+              </button>
+              <ul class="dropdown-menu">
+                {% for teacher in discipline.teachers %}
+                <li><a class="dropdown-item" href="#">{{ teacher.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
