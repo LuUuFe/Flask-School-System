@@ -1,47 +1,55 @@
-<form class="w-50 m-auto" method="POST" action="">
+<form class="m-auto" method="POST" action="">
   {{ form.hidden_tag() }}
 
-  <div class="mb-3">
-    {{ form.name.label(class="form-label") }}
-    {{ form.name(class="form-control", placeholder="Enter your name") }}
-  </div>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control", placeholder="Enter your name") }}
+      </div>
 
-  <div class="mb-3">
-    {{ form.registration.label(class="form-label") }}
-    {{ form.registration(class="form-control", placeholder="Enter your registration") }}
-  </div>
+      <div class="mb-3">
+        {{ form.registration.label(class="form-label") }}
+        {{ form.registration(class="form-control", placeholder="Enter your registration") }}
+      </div>
 
-  <div class="mb-3">
-    {{ form.dateOfBirth.label(class="form-label") }}
-    {{ form.dateOfBirth(class="form-control", type="date", placeholder="Enter your date of birth") }}
-  </div>
+      <div class="mb-3">
+        {{ form.dateOfBirth.label(class="form-label") }}
+        {{ form.dateOfBirth(class="form-control", type="date", placeholder="Enter your date of birth") }}
+      </div>
 
-  <div class="mb-3">
-    {{ form.gender.label(class="form-label") }}
-    {{ form.gender(class="form-control", placeholder="Enter your gender") }}
-  </div>
+      <div class="mb-3">
+        {{ form.gender.label(class="form-label") }}
+        {{ form.gender(class="form-control", placeholder="Enter your gender") }}
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        {{ form.address.label(class="form-label") }}
+        {{ form.address(class="form-control", placeholder="Enter your address") }}
+      </div>
 
-  <div class="mb-3">
-    {{ form.address.label(class="form-label") }}
-    {{ form.address(class="form-control", placeholder="Enter your address") }}
-  </div>
+      <div class="mb-3">
+        {{ form.phone.label(class="form-label") }}
+        {{ form.phone(class="form-control", placeholder="Enter your phone") }}
+      </div>
 
-  <div class="mb-3">
-    {{ form.phone.label(class="form-label") }}
-    {{ form.phone(class="form-control", placeholder="Enter your phone") }}
-  </div>
+      <div class="mb-3">
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control", placeholder="Enter your email") }}
+      </div>
 
-  <div class="mb-3">
-    {{ form.email.label(class="form-label") }}
-    {{ form.email(class="form-control", placeholder="Enter your email") }}
+      <div class="mb-3">
+        {{ form.course.label(class="form-label") }}
+        {{ form.course(class="form-select") }}
+      </div>
+    </div>
   </div>
-
-  <div class="mb-3">
-    {{ form.course.label(class="form-label") }}
-    {{ form.course(class="form-select") }}
-  </div>
-
-  <div class="d-grid">
-    {{ form.submit(class="btn btn-primary") }}
+  <div class="row">
+    <div class="col-6 mx-auto">
+      <div class="d-grid">
+        {{ form.submit(class="btn btn-primary") }}
+      </div>
+    </div>
   </div>
 </form>
