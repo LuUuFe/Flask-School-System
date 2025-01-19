@@ -5,6 +5,7 @@ from app.Models.TeacherDiscipline import TeacherDiscipline
 from app.Models.TeacherCourse import TeacherCourse
 from app.Forms.TeacherForm import TeacherForm
 from itertools import zip_longest
+from datetime import datetime
 
 
 def teacher():
@@ -23,7 +24,7 @@ def teacher():
     if form.validate_on_submit():
         name = form.name.data
         registration = form.registration.data
-        date_of_birth = form.dateOfBirth.data
+        date_of_birth = datetime.strftime(form.dateOfBirth.data, "%d/%m/%Y")
         gender = form.gender.data
         address = form.address.data
         phone = form.phone.data

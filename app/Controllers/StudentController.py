@@ -20,7 +20,7 @@ def index():
     if form.validate_on_submit():
         name = form.name.data
         registration = form.registration.data
-        date_of_birth = form.dateOfBirth.data
+        date_of_birth = datetime.strftime(form.dateOfBirth.data, "%d/%m/%Y")
         gender = form.gender.data
         address = form.address.data
         phone = form.phone.data
@@ -56,9 +56,10 @@ def edit(id):
     form = StudentForm()
 
     if form.validate_on_submit():
+      
         student.name = form.name.data
         student.registration = form.registration.data
-        student.date_of_birth = form.dateOfBirth.data
+        student.date_of_birth = datetime.strftime(form.dateOfBirth.data, "%d/%m/%Y")
         student.gender = form.gender.data
         student.address = form.address.data
         student.phone = form.phone.data
@@ -75,9 +76,7 @@ def edit(id):
     form.registration.data = student.registration
 
     # Convert the date string to a datetime object
-    dateOfBirthToDatetime = datetime.strptime(student.date_of_birth, "%d/%m/%Y")
-    dateOfBirthToStr = datetime.strftime(dateOfBirthToDatetime, "%Y-%m-%d")
-    form.dateOfBirth.data = datetime.strptime(dateOfBirthToStr, "%Y-%m-%d")
+    form.dateOfBirth.data = datetime.strptime(student.date_of_birth, "%d/%m/%Y")
     
     form.gender.data = student.gender
     form.address.data = student.address
