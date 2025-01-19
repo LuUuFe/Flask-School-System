@@ -6,38 +6,8 @@
 
 <div class="container my-5">
   <a href="/">Back to home page</a>
-  <form class="w-50 m-auto" method="POST" action="">
-    {{ form.hidden_tag() }}
-
-    <div class="mb-3">
-      {{ form.name.label(class="form-label") }}
-      {{ form.name(class="form-control", placeholder="Enter the discipline name") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.code.label(class="form-label") }}
-      {{ form.code(class="form-control", placeholder="Enter the discipline code") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.workload.label(class="form-label") }}
-      {{ form.workload(class="form-control", placeholder="Enter the workload") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.teacher.label(class="form-label") }}
-      {{ form.teacher(class="form-select") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.course.label(class="form-label") }}
-      {{ form.course(class="form-select") }}
-    </div>
-
-    <div class="d-grid">
-      {{ form.submit(class="btn btn-primary") }}
-    </div>
-  </form>
+  
+  {% include 'pages/discipline/form.html' %}
 
   <h2 class="mt-5 mb-3 text-center">Registered Disciplines</h2>
   <div class="table-responsive">
@@ -50,6 +20,8 @@
           <th scope="col">Workload</th>
           <th scope="col">Teachers</th>
           <th scope="col">Courses</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -60,6 +32,9 @@
           <td>{{ discipline.code }}</td>
           <td>{{ discipline.workload }}</td>
           <td>
+            {% if discipline.teachers|length == 0 %}
+            No teachers
+            {% else %}
             <div class="dropdown">
               <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -71,8 +46,12 @@
                 {% endfor %}
               </ul>
             </div>
+            {% endif %}
           </td>
           <td>
+            {% if discipline.courses|length == 0 %}
+            No courses
+            {% else %}
             <div class="dropdown">
               <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -84,6 +63,15 @@
                 {% endfor %}
               </ul>
             </div>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('main.discipline_edit', id=discipline.id) }}"
+              class="btn btn-warning btn-sm float-end ms-2">Edit</a>
+          </td>
+          <td>
+            <a href="{{ url_for('main.discipline_destroy', id=discipline.id) }}"
+              class="btn btn-danger btn-sm float-end">Delete</a>
           </td>
         </tr>
         {% endfor %}

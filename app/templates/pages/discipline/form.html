@@ -1,0 +1,42 @@
+<form class="w-50 m-auto" method="POST" action="">
+  {{ form.hidden_tag() }}
+
+  <div class="mb-3">
+    {{ form.name.label(class="form-label") }}
+    {{ form.name(class="form-control", placeholder="Enter the discipline name") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.code.label(class="form-label") }}
+    {{ form.code(class="form-control", placeholder="Enter the discipline code") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.workload.label(class="form-label") }}
+    {{ form.workload(class="form-control", placeholder="Enter the workload") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.teacher.label(class="form-label") }}
+    {% for subfield in form.teacher %}
+    <div class="form-check">
+      {{ subfield(class="form-check-input") }}
+      {{ subfield.label(class="form-check-label") }}
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="mb-3">
+    {{ form.course.label(class="form-label") }}
+    {% for subfield in form.course %}
+    <div class="form-check">
+      {{ subfield(class="form-check-input") }}
+      {{ subfield.label(class="form-check-label") }}
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="d-grid">
+    {{ form.submit(class="btn btn-primary") }}
+  </div>
+</form>
