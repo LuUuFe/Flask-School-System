@@ -1,1 +1,3 @@
-let table = new DataTable('#disciplineTable');
+let table = new DataTable('#table', {
+  responsive: true
+});
