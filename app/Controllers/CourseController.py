@@ -8,15 +8,12 @@ from app.Forms.CourseForm import CourseForm
 from itertools import zip_longest
 
 
-def course():
+def index():
     form = CourseForm()
 
     if form.validate_on_submit():
         name = form.name.data
         code = form.code.data
-        list_student_id = form.student.data
-        list_teacher_id = form.teacher.data
-        list_discipline_id = form.discipline.data
 
         newCourse = Course(name=name, code=code)
 
@@ -24,25 +21,7 @@ def course():
 
         db.session.flush()
 
-        for student_id, teacher_id, discipline_id in zip_longest(
-            list_student_id, list_teacher_id, list_discipline_id, fillvalue=0
-        ):
-            if student_id != 0:
-                updateStudent = Student.query.get_or_404(student_id)
-                updateStudent.course_id = newCourse.id
-                db.session.add(updateStudent)
-
-            if teacher_id != 0:
-                newTeacherCourse = TeacherCourse(
-                    teacher_id=teacher_id, course_id=newCourse.id
-                )
-                db.session.add(newTeacherCourse)
-
-            if discipline_id != 0:
-                newDisciplineCourse = DisciplineCourse(
-                    discipline_id=discipline_id, course_id=newCourse.id
-                )
-                db.session.add(newDisciplineCourse)
+        add_data_from_related_tables(form, newCourse)
 
         db.session.commit()
 
@@ -50,9 +29,73 @@ def course():
 
         return redirect(url_for("main.course"))
 
-    courses = (
-        Course.query.outerjoin(TeacherCourse, Course.id == TeacherCourse.course_id)
-        .outerjoin(DisciplineCourse, Course.id == DisciplineCourse.course_id)
-        .outerjoin(Student, Course.id == Student.course_id)
-    )
-    return render_template("pages/course.html", form=form, courses=courses)
+    courses = Course.query.all()
+
+    return render_template("pages/course/index.html", form=form, courses=courses)
+
+
+def edit(id):
+    course = Course.query.get_or_404(id)
+
+    form = CourseForm(obj=course)
+
+    if form.validate_on_submit():
+        course.name = form.name.data
+        course.code = form.code.data
+        course.workload = form.workload.data
+
+        add_data_from_related_tables(form, course)
+
+        db.session.commit()
+
+        flash(f"Course {course.name} updated successfully!", "success")
+
+        return redirect(url_for("main.course"))
+
+    form.populate_obj(course)
+
+    form.student.data = [student.id for student in course.students]
+    form.teacher.data = [teacher.id for teacher in course.teachers]
+    form.discipline.data = [discipline.id for discipline in course.disciplines]
+
+    return render_template("pages/course/edit.html", form=form, course=course)
+
+
+def destroy(id):
+    course = Course.query.get_or_404(id)
+    db.session.delete(course)
+    db.session.commit()
+    flash(f"Course {course.name} deleted successfully!", "success")
+    return redirect(url_for("main.course"))
+
+
+def add_data_from_related_tables(form, course):
+    """
+    Update the relationships of a course with students, teachers, and disciplines
+    based on the provided form data. Existing relationships are cleared before
+    adding the new ones.
+
+    :param form: The form containing the new student, teacher, and discipline data.
+    :param course: The course whose relationships need to be updated.
+    :return: None
+    """
+
+    # Clear existing relationships
+    Student.query.filter_by(course_id=course.id).delete()
+    TeacherCourse.query.filter_by(course_id=course.id).delete()
+    DisciplineCourse.query.filter_by(course_id=course.id).delete()
+
+    # Add new relationships based on form data
+    for studentId, teacherId, disicplineId in zip_longest(
+        form.student.data, form.teacher.data, form.discipline.data, fillvalue=0
+    ):
+        if studentId != 0:
+            db.session.add(Student(course_id=course.id))
+
+        if teacherId != 0:
+            db.session.add(TeacherCourse(teacher_id=teacherId, course_id=course.id))
+
+        if disicplineId != 0:
+            db.session.add(
+                DisciplineCourse(discipline_id=disicplineId, course_id=course.id)
+            )

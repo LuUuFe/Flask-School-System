@@ -19,7 +19,7 @@ def index():
 
         db.session.flush()
 
-        add_teachers_and_courses_in_discipline(form, newDiscipline)
+        add_data_from_related_tables(form, newDiscipline)
 
         db.session.commit()
 
@@ -44,7 +44,7 @@ def edit(id):
         discipline.code = form.code.data
         discipline.workload = form.workload.data
 
-        add_teachers_and_courses_in_discipline(form, discipline)
+        add_data_from_related_tables(form, discipline)
 
         db.session.commit()
 
@@ -70,7 +70,7 @@ def destroy(id):
     return redirect(url_for("main.discipline"))
 
 
-def add_teachers_and_courses_in_discipline(form, discipline):
+def add_data_from_related_tables(form, discipline):
     """
     Add or remove the teachers and courses selected in the form to/from the discipline in the database
 

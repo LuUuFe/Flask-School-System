@@ -27,7 +27,7 @@ def teacher():
         db.session.add(newTeacher)
         db.session.flush()
 
-        add_disciplines_and_courses_in_teacher(form, newTeacher)
+        add_data_from_related_tables(form, newTeacher)
 
         db.session.commit()
 
@@ -62,7 +62,7 @@ def edit(id):
         teacher.phone = form.phone.data
         teacher.email = form.email.data
 
-        add_disciplines_and_courses_in_teacher(form, teacher)
+        add_data_from_related_tables(form, teacher)
 
         db.session.commit()
 
@@ -94,7 +94,7 @@ def destroy(id):
     return redirect(url_for("main.teacher"))
 
 
-def add_disciplines_and_courses_in_teacher(form, teacher):
+def add_data_from_related_tables(form, teacher):
     """
     Add or remove the disciplines and courses selected in the form to/from the teacher in the database
     :param form: The form containing the selected disciplines and courses
