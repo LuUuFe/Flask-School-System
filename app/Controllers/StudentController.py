@@ -18,31 +18,23 @@ def index():
     form = StudentForm()
 
     if form.validate_on_submit():
-        name = form.name.data
-        registration = form.registration.data
-        date_of_birth = datetime.strftime(form.dateOfBirth.data, "%d/%m/%Y")
-        gender = form.gender.data
-        address = form.address.data
-        phone = form.phone.data
-        email = form.email.data
-        course_id = form.course.data
+        studentData = {
+            "name": form.name.data,
+            "registration": form.registration.data,
+            "date_of_birth": datetime.strftime(form.dateOfBirth.data, "%d/%m/%Y"),
+            "gender": form.gender.data,
+            "address": form.address.data,
+            "phone": form.phone.data,
+            "email": form.email.data,
+            "course_id": form.course.data,
+        }
 
-        newStudent = Student(
-            name=name,
-            registration=registration,
-            date_of_birth=date_of_birth,
-            gender=gender,
-            address=address,
-            phone=phone,
-            email=email,
-            course_id=course_id,
-        )
+        newStudent = Student(**studentData)
 
         db.session.add(newStudent)
         db.session.commit()
 
         flash("Student registered successfully!", "success")
-
         return redirect(url_for("main.student"))
 
     students = Student.query.outerjoin(Course, Student.course_id == Course.id).all()
@@ -50,13 +42,11 @@ def index():
 
 
 def edit(id):
-
     student = Student.query.get_or_404(id)
 
-    form = StudentForm()
+    form = StudentForm(obj=student)
 
     if form.validate_on_submit():
-      
         student.name = form.name.data
         student.registration = form.registration.data
         student.date_of_birth = datetime.strftime(form.dateOfBirth.data, "%d/%m/%Y")
@@ -72,17 +62,10 @@ def edit(id):
 
         return redirect(url_for("main.student"))
 
-    form.name.data = student.name
-    form.registration.data = student.registration
+    form.populate_obj(student)
 
     # Convert the date string to a datetime object
     form.dateOfBirth.data = datetime.strptime(student.date_of_birth, "%d/%m/%Y")
-    
-    form.gender.data = student.gender
-    form.address.data = student.address
-    form.phone.data = student.phone
-    form.email.data = student.email
-    form.course.data = student.course_id
 
     return render_template("pages/student/edit.html", form=form, student=student)
 
