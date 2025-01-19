@@ -14,9 +14,19 @@ def index():
     return render_template("nav.html")
 
 
-@main.route("/student", methods=["GET", "POST"])
+@main.route("/students", methods=["GET", "POST"])
 def student():
-    return StudentController.student()
+    return StudentController.index()
+
+
+@main.route("/student/edit/<int:id>", methods=["GET", "POST"])
+def student_edit(id):
+    return StudentController.edit(id)
+
+
+@main.route("/student/destroy/<int:id>", methods=["GET", "POST"])
+def student_destroy(id):
+    return StudentController.destroy(id)
 
 
 @main.route("/teacher", methods=["GET", "POST"])

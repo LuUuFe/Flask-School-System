@@ -89,6 +89,9 @@
           <td>{{ teacher.email }}</td>
           <td>
             <div class="dropdown">
+              {% if teacher.courses|length == 0 %}
+              No courses
+              {% else %}
               <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Disciplines
@@ -99,8 +102,12 @@
                 {% endfor %}
               </ul>
             </div>
+            {% endif %}
           </td>
           <td>
+            {% if teacher.courses|length == 0 %}
+            No courses
+            {% else %}
             <div class="dropdown">
               <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -112,6 +119,7 @@
                 {% endfor %}
               </ul>
             </div>
+            {% endif %}
           </td>
         </tr>
         {% endfor %}
