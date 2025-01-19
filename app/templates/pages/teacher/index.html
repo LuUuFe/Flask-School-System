@@ -6,58 +6,8 @@
 
 <div class="container my-5">
   <a href="/">Back to home page</a>
-  <form class="w-50 m-auto" method="POST" action="">
-    {{ form.hidden_tag() }}
-
-    <div class="mb-3">
-      {{ form.name.label(class="form-label") }}
-      {{ form.name(class="form-control", placeholder="Enter your name") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.registration.label(class="form-label") }}
-      {{ form.registration(class="form-control", placeholder="Enter your registration") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.dateOfBirth.label(class="form-label") }}
-      {{ form.dateOfBirth(class="form-control", type="date", placeholder="Enter your date of birth") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.gender.label(class="form-label") }}
-      {{ form.gender(class="form-control", placeholder="Enter your gender") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.address.label(class="form-label") }}
-      {{ form.address(class="form-control", placeholder="Enter your address") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.phone.label(class="form-label") }}
-      {{ form.phone(class="form-control", placeholder="Enter your phone") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.email.label(class="form-label") }}
-      {{ form.email(class="form-control", placeholder="Enter your email") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.discipline.label(class="form-label") }}
-      {{ form.discipline(class="form-select") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.course.label(class="form-label") }}
-      {{ form.course(class="form-select") }}
-    </div>
-
-    <div class="d-grid">
-      {{ form.submit(class="btn btn-primary") }}
-    </div>
-  </form>
+  
+  {% include 'pages/teacher/form.html' %}
 
   <h2 class="mt-5 mb-3 text-center">Registered Teachers</h2>
   <div class="table-responsive">
@@ -74,6 +24,8 @@
           <th scope="col">E-mail</th>
           <th scope="col">teachers</th>
           <th scope="col">Courses</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -90,7 +42,7 @@
           <td>
             <div class="dropdown">
               {% if teacher.courses|length == 0 %}
-              No courses
+              No disciplines
               {% else %}
               <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -120,6 +72,14 @@
               </ul>
             </div>
             {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('main.teacher_edit', id=teacher.id) }}"
+              class="btn btn-warning btn-sm float-end ms-2">Edit</a>
+          </td>
+          <td>
+            <a href="{{ url_for('main.teacher_destroy', id=teacher.id) }}"
+              class="btn btn-danger btn-sm float-end">Delete</a>
           </td>
         </tr>
         {% endfor %}

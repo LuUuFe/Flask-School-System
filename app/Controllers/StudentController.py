@@ -37,7 +37,7 @@ def index():
         flash("Student registered successfully!", "success")
         return redirect(url_for("main.student"))
 
-    students = Student.query.outerjoin(Course, Student.course_id == Course.id).all()
+    students = Student.query.all()
     return render_template("pages/student/index.html", form=form, students=students)
 
 
@@ -63,6 +63,8 @@ def edit(id):
         return redirect(url_for("main.student"))
 
     form.populate_obj(student)
+    
+    form.course.data = student.course_id
 
     # Convert the date string to a datetime object
     form.dateOfBirth.data = datetime.strptime(student.date_of_birth, "%d/%m/%Y")

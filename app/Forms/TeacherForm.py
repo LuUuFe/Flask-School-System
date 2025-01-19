@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, SelectMultipleField, SubmitField
+from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms.validators import DataRequired
 from app.Models.Discipline import Discipline
 from app.Models.Course import Course
@@ -15,8 +16,20 @@ class TeacherForm(FlaskForm):
     address = StringField("Enter your address", validators=[DataRequired()])
     phone = StringField("Enter your phone", validators=[DataRequired()])
     email = StringField("Enter your email", validators=[DataRequired()])
-    discipline = SelectMultipleField("Choose a discipline", default=None, coerce=int)
-    course = SelectMultipleField("Choose a course", default=None, coerce=int)
+    discipline = SelectMultipleField(
+        "Choose a discipline",
+        default=None,
+        coerce=int,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
+    course = SelectMultipleField(
+        "Choose a course",
+        default=None,
+        coerce=int,
+        widget=ListWidget(prefix_label=False),
+        option_widget=CheckboxInput(),
+    )
     submit = SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
