@@ -42,7 +42,6 @@ def edit(id):
     if form.validate_on_submit():
         course.name = form.name.data
         course.code = form.code.data
-        course.workload = form.workload.data
 
         add_data_from_related_tables(form, course)
 

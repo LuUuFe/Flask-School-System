@@ -25,7 +25,7 @@ class StudentForm(FlaskForm):
         default=1,
         coerce=int,
         validators=[DataRequired(message="Please enter a gender")],
-        choices=[("1", "Male"), ("2", "Female")],
+        choices=[(1, "Male"), (2, "Female")],
     )
     address = StringField(
         "Enter your address",

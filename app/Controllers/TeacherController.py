@@ -1,3 +1,4 @@
+from ast import dump
 from flask import render_template, redirect, url_for, flash
 from app import db
 from app.Models.Teacher import Teacher
@@ -14,16 +15,18 @@ def teacher():
     form = TeacherForm()
 
     if form.validate_on_submit():
-        newTeacher = Teacher(
-            name=form.name.data,
-            registration=form.registration.data,
-            date_of_birth=datetime.strftime(form.dateOfBirth.data, "%d/%m/%Y"),
-            gender=form.gender.data,
-            address=form.address.data,
-            phone=form.phone.data,
-            email=form.email.data,
-        )
+        newTeacher = {
+            "name": form.name.data,
+            "registration": form.registration.data,
+            "date_of_birth": datetime.strftime(form.dateOfBirth.data, "%d/%m/%Y"),
+            "gender": "Male" if form.gender.data == 1 else "Female",
+            "address": form.address.data,
+            "phone": form.phone.data,
+            "email": form.email.data,
+        }
 
+        # Create a new Teacher object and add it to the database
+        newTeacher = Teacher(**newTeacher)
         db.session.add(newTeacher)
         db.session.flush()
 
@@ -34,7 +37,7 @@ def teacher():
         flash("Teacher registered successfully!", "success")
 
         return redirect(url_for("main.teacher"))
-    
+
     teachers = Teacher.query.all()
 
     return render_template("pages/teacher/index.html", form=form, teachers=teachers)
@@ -57,26 +60,29 @@ def edit(id):
         teacher.name = form.name.data
         teacher.registration = form.registration.data
         teacher.date_of_birth = datetime.strftime(form.dateOfBirth.data, "%d/%m/%Y")
-        teacher.gender = form.gender.data
+        teacher.gender = "Male" if form.gender.data == 1 else "Female"
         teacher.address = form.address.data
         teacher.phone = form.phone.data
         teacher.email = form.email.data
+
 
         add_data_from_related_tables(form, teacher)
 
         db.session.commit()
 
         flash(f"Teacher {teacher.name} updated successfully!", "success")
- 
+
         return redirect(url_for("main.teacher"))
 
     form.populate_obj(teacher)
 
-    form.discipline.data = [discipline.id for discipline in teacher.disciplines]
-    form.course.data = [course.id for course in teacher.courses]
-
     # Convert the date string to a datetime object
     form.dateOfBirth.data = datetime.strptime(teacher.date_of_birth, "%d/%m/%Y")
+
+    form.gender.data = 1 if teacher.gender == "Male" else 2
+
+    form.discipline.data = [discipline.id for discipline in teacher.disciplines]
+    form.course.data = [course.id for course in teacher.courses]
 
     return render_template("pages/teacher/edit.html", form=form, teacher=teacher)
 

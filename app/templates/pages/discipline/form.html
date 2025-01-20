@@ -1,19 +1,46 @@
-<form class="w-50 m-auto" method="POST" action="">
+<form class="w-50 m-auto" method="POST" novalidate>
   {{ form.hidden_tag() }}
 
   <div class="mb-3">
     {{ form.name.label(class="form-label") }}
+    {% if form.name.errors %}
+    {{ form.name(class="form-control is-invalid", placeholder="Enter the discipline name") }}
+    {% for error in form.name.errors %}
+    <div class="invalid-feedback">
+      {{ error }}
+    </div>
+    {% endfor %}
+    {% else %}
     {{ form.name(class="form-control", placeholder="Enter the discipline name") }}
+    {% endif %}
   </div>
 
   <div class="mb-3">
     {{ form.code.label(class="form-label") }}
+    {% if form.code.errors %}
+    {{ form.code(class="form-control is-invalid", placeholder="Enter the discipline code") }}
+    {% for error in form.code.errors %}
+    <div class="invalid-feedback">
+      {{ error }}
+    </div>
+    {% endfor %}
+    {% else %}
     {{ form.code(class="form-control", placeholder="Enter the discipline code") }}
+    {% endif %}
   </div>
 
   <div class="mb-3">
     {{ form.workload.label(class="form-label") }}
+    {% if form.workload.errors %}
+    {{ form.workload(class="form-control is-invalid", placeholder="Enter the workload") }}
+    {% for error in form.workload.errors %}
+    <div class="invalid-feedback">
+      {{ error }}
+    </div>
+    {% endfor %}
+    {% else %}
     {{ form.workload(class="form-control", placeholder="Enter the workload") }}
+    {% endif %}
   </div>
 
   <div class="mb-3">

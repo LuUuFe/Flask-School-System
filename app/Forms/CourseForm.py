@@ -1,15 +1,27 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 from app.Models.Student import Student
 from app.Models.Teacher import Teacher
 from app.Models.Discipline import Discipline
 
 
 class CourseForm(FlaskForm):
-    name = StringField("Enter a name", validators=[DataRequired()])
-    code = StringField("Enter a code", validators=[DataRequired()])
+    name = StringField(
+        "Enter a name",
+        validators=[
+            DataRequired(message="Please enter a name"),
+            Length(min=1, max=50, message="Name must be between 1 and 50 characters"),
+        ],
+    )
+    code = StringField(
+        "Enter a code",
+        validators=[
+            DataRequired(message="Please enter a code"),
+            Length(min=1, max=50, message="Code must be between 1 and 50 characters"),
+        ],
+    )
     student = SelectMultipleField(
         "Choose a student",
         default=None,
