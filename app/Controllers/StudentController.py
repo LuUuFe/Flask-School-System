@@ -1,7 +1,6 @@
 from flask import render_template, redirect, url_for, flash
 from app import db
 from app.Models.Student import Student
-from app.Models.Course import Course
 from app.Forms.StudentForm import StudentForm
 from datetime import datetime
 
