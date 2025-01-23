@@ -80,7 +80,7 @@ def add_data_from_related_tables(form, discipline):
     """
 
     # Clear existing relationships
-    TeacherDiscipline.query.filter_by(teacher_id=discipline.id).delete()
+    TeacherDiscipline.query.filter_by(discipline_id=discipline.id).delete()
     DisciplineCourse.query.filter_by(discipline_id=discipline.id).delete()
 
     # Add new relationships based on form data
@@ -89,7 +89,7 @@ def add_data_from_related_tables(form, discipline):
     ):
         if teacherId != 0:
             db.session.add(
-                TeacherDiscipline(teacher_id=teacherId.id, discipline_id=discipline.id)
+                TeacherDiscipline(teacher_id=teacherId, discipline_id=discipline.id)
             )
 
         if courseId != 0:

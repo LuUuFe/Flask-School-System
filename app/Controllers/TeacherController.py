@@ -10,11 +10,20 @@ from datetime import datetime
 
 
 def teacher():
-    """Handles the teacher registration form and displays all teachers in the database."""
+    """Handles the teacher registration form and displays all teachers in the database.
 
+    If the form is valid, it creates a new Teacher object and adds it to the database.
+    After successful registration, it flashes a success message and redirects to this route.
+
+    Otherwise, it renders the teacher.html template with the registration form and all teachers.
+    """
     form = TeacherForm()
 
+    # Convert radio button values to integers
+    form.gender.data = 1 if form.gender.data == "Male" else 2
+
     if form.validate_on_submit():
+        # Create a new Teacher object and add it to the database
         newTeacher = {
             "name": form.name.data,
             "registration": form.registration.data,
@@ -25,11 +34,11 @@ def teacher():
             "email": form.email.data,
         }
 
-        # Create a new Teacher object and add it to the database
         newTeacher = Teacher(**newTeacher)
         db.session.add(newTeacher)
         db.session.flush()
 
+        # Add or remove disciplines and courses from the teacher
         add_data_from_related_tables(form, newTeacher)
 
         db.session.commit()
@@ -38,12 +47,14 @@ def teacher():
 
         return redirect(url_for("main.teacher"))
 
+    # Get all teachers from the database
     teachers = Teacher.query.all()
 
+    # Render the teacher.html template with the registration form and all teachers
     return render_template("pages/teacher/index.html", form=form, teachers=teachers)
 
 
-def edit(id):
+def edit(id: int):
     """
     Handles the teacher edit form and updates a teacher in the database.
 
@@ -56,6 +67,16 @@ def edit(id):
 
     form = TeacherForm(obj=teacher)
 
+    form.gender.data = 1 if teacher.gender == "Male" else 2
+
+    # Convert the date string to a datetime object
+    form.dateOfBirth.data = datetime.strptime(teacher.date_of_birth, "%d/%m/%Y")
+
+    form.discipline.data = [discipline.id for discipline in teacher.disciplines]
+    form.course.data = [course.id for course in teacher.courses]
+
+    print(form.gender.data)
+
     if form.validate_on_submit():
         teacher.name = form.name.data
         teacher.registration = form.registration.data
@@ -65,7 +86,6 @@ def edit(id):
         teacher.phone = form.phone.data
         teacher.email = form.email.data
 
-
         add_data_from_related_tables(form, teacher)
 
         db.session.commit()
@@ -74,20 +94,10 @@ def edit(id):
 
         return redirect(url_for("main.teacher"))
 
-    form.populate_obj(teacher)
-
-    # Convert the date string to a datetime object
-    form.dateOfBirth.data = datetime.strptime(teacher.date_of_birth, "%d/%m/%Y")
-
-    form.gender.data = 1 if teacher.gender == "Male" else 2
-
-    form.discipline.data = [discipline.id for discipline in teacher.disciplines]
-    form.course.data = [course.id for course in teacher.courses]
-
     return render_template("pages/teacher/edit.html", form=form, teacher=teacher)
 
 
-def destroy(id):
+def destroy(id: int):
     """
     Delete a teacher from the database
     :param id: The ID of the teacher to delete
@@ -100,7 +110,7 @@ def destroy(id):
     return redirect(url_for("main.teacher"))
 
 
-def add_data_from_related_tables(form, teacher):
+def add_data_from_related_tables(form: TeacherForm, teacher: Teacher):
     """
     Add or remove the disciplines and courses selected in the form to/from the teacher in the database
     :param form: The form containing the selected disciplines and courses

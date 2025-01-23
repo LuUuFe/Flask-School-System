@@ -10,16 +10,20 @@
     <a href="{{ url_for('main.student') }}" class="btn btn-secondary btn-sm">Back students</a>
   </div>
 
-  <h2 class="mb-3 text-center text-body-emphasis">Edit a student</h2>
+  <h2 class="mb-3 text-center text-body-emphasis">Create a new student</h2>
 
-  <form class="m-auto" method="POST" action="{{ url_for('main.student_edit', id=student.id) }}" novalidate>
+  <form class="m-auto" method="POST" action="{{ url_for('main.student_create') }}" novalidate>
     {{ form.hidden_tag() }}
 
     {% include 'pages/student/form.html' %}
 
   </form>
-
 </div>
+
+<script>
+  // Remove the current URL from the browser's history
+  
+</script>
 
 
 {% endblock %}

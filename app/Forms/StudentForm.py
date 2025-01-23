@@ -56,13 +56,6 @@ class StudentForm(FlaskForm):
     submit = SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
-        """
-        Initializes the StudentForm and populates the course choices.
-
-        Retrieves all courses from the database and sets them as choices for
-        the course SelectField. Adds a default option "No course" at the
-        beginning of the choices list.
-        """
         super(StudentForm, self).__init__(*args, **kwargs)
         self.course.choices = [
             (course.id, course.name) for course in Course.query.all()

@@ -14,12 +14,55 @@
 
 <body>
 
-  <div class="container">
+  <header class="container-fluid">
+    <div class="px-3 py-2 border-bottom">
+      <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-decoration-none">
+          <img src="{{ url_for('static', filename='img/ifms.png') }}" alt="IFMS Logo" width="60">
+        </a>
+        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+          <li>
+            <a href="{{ url_for('main.index') }}" class="nav-link text-black">
+              <i class="bi bi-house mx-auto mb-1 fs-4"></i>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('main.student') }}" class="nav-link text-primary">
+              <i class="bi bi-people mx-auto mb-1 fs-4"></i>
+              Students
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('main.teacher') }}" class="nav-link text-secondary">
+              <i class="bi bi-people mx-auto mb-1 fs-4"></i>
+              Teachers
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('main.discipline') }}" class="nav-link text-danger">
+              <i class="bi bi-book mx-auto mb-1 fs-4"></i>
+              Disciplines
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('main.course') }}" class="nav-link text-success">
+              <i class="bi bi-mortarboard mx-auto mb-1 fs-4"></i>
+              Courses
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
     {% block content %}
 
     {% endblock %}
-  </div>
+  </main>
 
+  <!-- Toasts for messages -->
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
   <div class="toast-container position-static"></div>

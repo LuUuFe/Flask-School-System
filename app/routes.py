@@ -9,14 +9,19 @@ from app.Controllers import (
 main = Blueprint("main", __name__)
 
 
-@main.route("/", methods=["GET", "POST"])
+@main.route("/", methods=["GET"])
 def index():
     return render_template("nav.html")
 
 
-@main.route("/students", methods=["GET", "POST"])
+@main.route("/students", methods=["GET"])
 def student():
     return StudentController.index()
+
+
+@main.route("/student/create", methods=["GET", "POST"])
+def student_create():
+    return StudentController.create()
 
 
 @main.route("/student/edit/<int:id>", methods=["GET", "POST"])
