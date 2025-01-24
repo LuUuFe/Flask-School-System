@@ -1,65 +1,61 @@
-<form class="w-50 m-auto" method="POST" novalidate>
-  {{ form.hidden_tag() }}
-
-  <div class="mb-3">
+<div class="mb-3">
     {{ form.name.label(class="form-label") }}
     {% if form.name.errors %}
     {{ form.name(class="form-control is-invalid", placeholder="Enter the course name") }}
     {% for error in form.name.errors %}
     <div class="invalid-feedback">
-      {{ error }}
+        {{ error }}
     </div>
     {% endfor %}
     {% else %}
     {{ form.name(class="form-control", placeholder="Enter the course name") }}
     {% endif %}
-  </div>
+</div>
 
-  <div class="mb-3">
+<div class="mb-3">
     {{ form.code.label(class="form-label") }}
     {% if form.code.errors %}
     {{ form.code(class="form-control is-invalid", placeholder="Enter the course code") }}
     {% for error in form.code.errors %}
     <div class="invalid-feedback">
-      {{ error }}
+        {{ error }}
     </div>
     {% endfor %}
     {% else %}
     {{ form.code(class="form-control", placeholder="Enter the course code") }}
     {% endif %}
-  </div>
+</div>
 
-  <div class="mb-3">
+<div class="mb-3">
     {{ form.student.label(class="form-label") }}
     {% for subfield in form.student %}
     <div class="form-check">
-      {{ subfield(class="form-check-input") }}
-      {{ subfield.label(class="form-check-label") }}
+        {{ subfield(class="form-check-input") }}
+        {{ subfield.label(class="form-check-label") }}
     </div>
     {% endfor %}
-  </div>
+</div>
 
-  <div class="mb-3">
+<div class="mb-3">
     {{ form.teacher.label(class="form-label") }}
     {% for subfield in form.teacher %}
     <div class="form-check">
-      {{ subfield(class="form-check-input") }}
-      {{ subfield.label(class="form-check-label") }}
+        {{ subfield(class="form-check-input") }}
+        {{ subfield.label(class="form-check-label") }}
     </div>
     {% endfor %}
-  </div>
+</div>
 
-  <div class="mb-3">
+<div class="mb-3">
     {{ form.discipline.label(class="form-label") }}
     {% for subfield in form.discipline %}
     <div class="form-check">
-      {{ subfield(class="form-check-input") }}
-      {{ subfield.label(class="form-check-label") }}
+        {{ subfield(class="form-check-input") }}
+        {{ subfield.label(class="form-check-label") }}
     </div>
     {% endfor %}
-  </div>
+</div>
 
-  <div class="d-grid">
+<div class="d-grid">
     {{ form.submit(class="btn btn-primary") }}
-  </div>
-</form>
+</div>

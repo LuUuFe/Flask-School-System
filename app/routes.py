@@ -74,16 +74,21 @@ def discipline_destroy(id: int):
     return DisciplineController.destroy(id)
 
 
-@main.route("/courses", methods=["GET", "POST"])
+@main.route("/courses", methods=["GET"])
 def course():
     return CourseController.index()
 
 
+@main.route("/course/create", methods=["GET", "POST"])
+def course_create():
+    return CourseController.create()
+
+
 @main.route("/course/edit/<int:id>", methods=["GET", "POST"])
-def course_edit(id):
+def course_edit(id: int):
     return CourseController.edit(id)
 
 
 @main.route("/course/destroy/<int:id>", methods=["GET", "POST"])
-def course_destroy(id):
+def course_destroy(id: int):
     return CourseController.destroy(id)

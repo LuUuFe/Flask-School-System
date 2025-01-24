@@ -5,95 +5,98 @@
 {% block content %}
 
 <div class="container my-5">
-  <a href="/">Back to home page</a>
 
-  {% include 'pages/course/form.html' %}
+    <div class="d-grid gap-2 d-md-block">
+        <a href="{{ url_for('main.index') }}" class="btn btn-secondary btn-sm">Back home page</a>
+        <a href="{{ url_for('main.course_create') }}" class="btn btn-primary btn-sm">Create a new course</a>
+    </div>
 
-  <h2 class="mt-5 mb-3 text-center">Registered Courses</h2>
-  <div class="table-responsive">
-    <table id="table" class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">Code</th>
-          <th scope="col">Students</th>
-          <th scope="col">Teachers</th>
-          <th scope="col">Disciplines</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for course in courses %}
-        <tr>
-          <th scope="row">{{ course.id }}</th>
-          <td>{{ course.name }}</td>
-          <td>{{ course.code }}</td>
-          <td>
-            {% if course.students|length == 0 %}
-            No students
-            {% else %}
-            <div class="dropdown">
-              <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Students
-              </button>
-              <ul class="dropdown-menu">
-                {% for student in course.students %}
-                <li><a class="dropdown-item" href="#">{{ student.name }}</a></li>
+    <h2 class="mb-3 text-center text-body-emphasis">Registered courses</h2>
+
+    <div class="table-responsive">
+        <table id="table" class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Students</th>
+                    <th scope="col">Teachers</th>
+                    <th scope="col">Disciplines</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <th scope="row">{{ course.id }}</th>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.code }}</td>
+                    <td>
+                        {% if course.students|length == 0 %}
+                        No students
+                        {% else %}
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Students
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% for student in course.students %}
+                                <li><a class="dropdown-item" href="#">{{ student.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if course.teachers|length == 0 %}
+                        No teachers
+                        {% else %}
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Teachers
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% for teacher in course.teachers %}
+                                <li><a class="dropdown-item" href="#">{{ teacher.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if course.disciplines|length == 0 %}
+                        No disciplines
+                        {% else %}
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Disciplines
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% for discipline in course.disciplines %}
+                                <li><a class="dropdown-item" href="#">{{ discipline.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('main.course_edit', id=course.id) }}"
+                            class="btn btn-warning btn-sm float-end ms-2">Edit</a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('main.course_destroy', id=course.id) }}"
+                            class="btn btn-danger btn-sm float-end">Delete</a>
+                    </td>
+                </tr>
                 {% endfor %}
-              </ul>
-            </div>
-            {% endif %}
-          </td>
-          <td>
-            {% if course.teachers|length == 0 %}
-            No teachers
-            {% else %}
-            <div class="dropdown">
-              <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Teachers
-              </button>
-              <ul class="dropdown-menu">
-                {% for teacher in course.teachers %}
-                <li><a class="dropdown-item" href="#">{{ teacher.name }}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% endif %}
-          </td>
-          <td>
-            {% if course.disciplines|length == 0 %}
-            No disciplines
-            {% else %}
-            <div class="dropdown">
-              <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Disciplines
-              </button>
-              <ul class="dropdown-menu">
-                {% for discipline in course.disciplines %}
-                <li><a class="dropdown-item" href="#">{{ discipline.name }}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% endif %}
-          </td>
-          <td>
-            <a href="{{ url_for('main.course_edit', id=course.id) }}"
-              class="btn btn-warning btn-sm float-end ms-2">Edit</a>
-          </td>
-          <td>
-            <a href="{{ url_for('main.course_destroy', id=course.id) }}"
-              class="btn btn-danger btn-sm float-end">Delete</a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
