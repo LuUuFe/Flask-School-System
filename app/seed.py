@@ -10,13 +10,11 @@ faker = Faker()
 
 
 def seed_data():
-    # Limpando os dados existentes no banco de dados
     db.drop_all()
     db.create_all()
 
-    # Criando Cursos
     courses = []
-    for _ in range(5):  # Cria 5 cursos de exemplo
+    for _ in range(5):
         course = Course(
             name=faker.unique.job(),
             code=f"CRS{faker.unique.random_int(min=100, max=999)}",
@@ -25,9 +23,8 @@ def seed_data():
     db.session.add_all(courses)
     db.session.commit()
 
-    # Criando Disciplinas
     disciplines = []
-    for _ in range(10):  # Cria 10 disciplinas de exemplo
+    for _ in range(10):
         discipline = Discipline(
             name=faker.unique.bs().title(),
             code=f"DSC{faker.unique.random_int(min=100, max=999)}",
@@ -37,7 +34,6 @@ def seed_data():
     db.session.add_all(disciplines)
     db.session.commit()
 
-    # Relacionando disciplinas a cursos
     for course in courses:
         assigned_disciplines = faker.random_elements(
             elements=disciplines, length=random.randint(2, 5), unique=True
@@ -45,9 +41,8 @@ def seed_data():
         course.disciplines.extend(assigned_disciplines)
     db.session.commit()
 
-    # Criando Professores
     teachers = []
-    for _ in range(10):  # Cria 10 professores de exemplo
+    for _ in range(10):
         teacher = Teacher(
             name=faker.name(),
             registration=f"T{faker.unique.random_int(min=1000, max=9999)}",
@@ -63,7 +58,6 @@ def seed_data():
     db.session.add_all(teachers)
     db.session.commit()
 
-    # Relacionando professores a disciplinas e cursos
     for teacher in teachers:
         assigned_disciplines = faker.random_elements(
             elements=disciplines, length=random.randint(1, 3), unique=True
@@ -75,9 +69,8 @@ def seed_data():
         teacher.courses.extend(assigned_courses)
     db.session.commit()
 
-    # Criando Estudantes
     students = []
-    for _ in range(50):  # Cria 50 estudantes de exemplo
+    for _ in range(50):
         student = Student(
             name=faker.name(),
             registration=f"S{faker.unique.random_int(min=1000, max=9999)}",
@@ -94,4 +87,4 @@ def seed_data():
     db.session.add_all(students)
     db.session.commit()
 
-    print("Dados inicializados com sucesso!")
+    print("Data initialized successfully!")

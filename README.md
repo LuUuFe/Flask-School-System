@@ -7,6 +7,8 @@ This project is a basic school management system developed with Flask, enabling 
 ## Technologies Used
 
 - Python 3.10+
+- Bootstrap 5
+- DataTables
 - Flask
 - Flask-WTF
 - Flask-SQLAlchemy
@@ -60,7 +62,7 @@ $ pip install -r requirements.txt
 Start the local server:
 
 ```bash
-$ flask run
+$ python run.py
 ```
 
 The application will be available at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
@@ -74,13 +76,17 @@ Flask-School-System/
 |
 |-- app/
 |   |-- __init__.py       # Flask application configuration
-|   |-- models.py         # Database models definition
-|   |-- forms.py          # Flask-WTF forms
+|   |-- Controllers/      # Controller templates and models
+|   |-- Forms/            # Flask-WTF forms
+|   |-- Models/           # Database models definition
 |   |-- routes.py         # Application routes
 |   |-- templates/        # HTML files
 |   |-- static/           # Static files (CSS, JS, images)
-|   |-- config.py             # Application configuration
+|   |-- config.py         # Application configuration
+|   |-- seed.py           # Data generator
 |
+|-- instance/
+|   |-- data.db           # Database (SQLite)
 |-- requirements.txt      # Project dependencies
 |-- run.py                # Application entry point
 ```
