@@ -34,9 +34,14 @@ def student_destroy(id):
     return StudentController.destroy(id)
 
 
-@main.route("/teachers", methods=["GET", "POST"])
+@main.route("/teachers", methods=["GET"])
 def teacher():
-    return TeacherController.teacher()
+    return TeacherController.index()
+
+
+@main.route("/teacher/create", methods=["GET", "POST"])
+def teacher_create():
+    return TeacherController.create()
 
 
 @main.route("/teacher/edit/<int:id>", methods=["GET", "POST"])
