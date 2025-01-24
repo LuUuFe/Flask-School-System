@@ -12,15 +12,12 @@
 
     <h2 class="mb-3 text-center text-body-emphasis">Edit a discipline</h2>
 
-    <form class="m-auto" method="POST" action="{{ url_for('main.discipline_edit', id=discipline.id) }}" novalidate>
-
+    <form class="w-50 m-auto" method="POST" action="{{ url_for('main.discipline_create') }}" novalidate>
         {{ form.hidden_tag() }}
 
         {% include 'pages/discipline/form.html' %}
 
     </form>
-
 </div>
-
 
 {% endblock %}

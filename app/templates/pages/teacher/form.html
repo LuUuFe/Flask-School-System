@@ -1,117 +1,117 @@
 <div class="mb-3">
-  {{ form.name.label(class="form-label") }}
-  {% if form.name.errors %}
-  {{ form.name(class="form-control is-invalid", placeholder="Enter your name") }}
-  {% for error in form.name.errors %}
-  <div class="invalid-feedback">
-    {{ error }}
-  </div>
-  {% endfor %}
-  {% else %}
-  {{ form.name(class="form-control", placeholder="Enter your name") }}
-  {% endif %}
+    {{ form.name.label(class="form-label") }}
+    {% if form.name.errors %}
+    {{ form.name(class="form-control is-invalid", placeholder="Enter your name") }}
+    {% for error in form.name.errors %}
+    <div class="invalid-feedback">
+        {{ error }}
+    </div>
+    {% endfor %}
+    {% else %}
+    {{ form.name(class="form-control", placeholder="Enter your name") }}
+    {% endif %}
 </div>
 
 <div class="mb-3">
-  {{ form.registration.label(class="form-label") }}
-  {% if form.registration.errors %}
-  {{ form.registration(class="form-control is-invalid", placeholder="Enter your registration") }}
-  {% for error in form.registration.errors %}
-  <div class="invalid-feedback">
-    {{ error }}
-  </div>
-  {% endfor %}
-  {% else %}
-  {{ form.registration(class="form-control", placeholder="Enter your registration") }}
-  {% endif %}
+    {{ form.registration.label(class="form-label") }}
+    {% if form.registration.errors %}
+    {{ form.registration(class="form-control is-invalid", placeholder="Enter your registration") }}
+    {% for error in form.registration.errors %}
+    <div class="invalid-feedback">
+        {{ error }}
+    </div>
+    {% endfor %}
+    {% else %}
+    {{ form.registration(class="form-control", placeholder="Enter your registration") }}
+    {% endif %}
 </div>
 
 <div class="mb-3">
-  {{ form.dateOfBirth.label(class="form-label") }}
-  {% if form.dateOfBirth.errors %}
-  {{ form.dateOfBirth(class="form-control is-invalid", type="date", placeholder="Enter your date of birth") }}
-  {% for error in form.dateOfBirth.errors %}
-  <div class="invalid-feedback">
-    {{ error }}
-  </div>
-  {% endfor %}
-  {% else %}
-  {{ form.dateOfBirth(class="form-control", type="date", placeholder="Enter your date of birth") }}
-  {% endif %}
+    {{ form.dateOfBirth.label(class="form-label") }}
+    {% if form.dateOfBirth.errors %}
+    {{ form.dateOfBirth(class="form-control is-invalid", type="date", placeholder="Enter your date of birth") }}
+    {% for error in form.dateOfBirth.errors %}
+    <div class="invalid-feedback">
+        {{ error }}
+    </div>
+    {% endfor %}
+    {% else %}
+    {{ form.dateOfBirth(class="form-control", type="date", placeholder="Enter your date of birth") }}
+    {% endif %}
 </div>
 
 <div class="mb-3">
-  {{ form.gender.label(class="form-label") }}
-  {% for subfield in form.gender %}
-  <div class="form-check">
-    {{ subfield(class="form-check-input", placeholder="Enter your gender") }}
-    {{ subfield.label(class="form-check-label") }}
-  </div>
-  {% endfor %}
+    {{ form.gender.label(class="form-label") }}
+    {% for subfield in form.gender %}
+    <div class="form-check">
+        {{ subfield(class="form-check-input", placeholder="Enter your gender") }}
+        {{ subfield.label(class="form-check-label") }}
+    </div>
+    {% endfor %}
 </div>
 
 <div class="mb-3">
-  {{ form.address.label(class="form-label") }}
-  {% if form.address.errors %}
-  {{ form.address(class="form-control is-invalid", placeholder="Enter your address") }}
-  {% for error in form.address.errors %}
-  <div class="invalid-feedback">
-    {{ error }}
-  </div>
-  {% endfor %}
-  {% else %}
-  {{ form.address(class="form-control", placeholder="Enter your address") }}
-  {% endif %}
+    {{ form.address.label(class="form-label") }}
+    {% if form.address.errors %}
+    {{ form.address(class="form-control is-invalid", placeholder="Enter your address") }}
+    {% for error in form.address.errors %}
+    <div class="invalid-feedback">
+        {{ error }}
+    </div>
+    {% endfor %}
+    {% else %}
+    {{ form.address(class="form-control", placeholder="Enter your address") }}
+    {% endif %}
 </div>
 
 <div class="mb-3">
-  {{ form.phone.label(class="form-label") }}
-  {% if form.phone.errors %}
-  {{ form.phone(class="form-control is-invalid", placeholder="Enter your phone") }}
-  {% for error in form.phone.errors %}
-  <div class="invalid-feedback">
-    {{ error }}
-  </div>
-  {% endfor %}
-  {% else %}
-  {{ form.phone(class="form-control", placeholder="Enter your phone") }}
-  {% endif %}
+    {{ form.phone.label(class="form-label") }}
+    {% if form.phone.errors %}
+    {{ form.phone(class="form-control is-invalid", placeholder="Enter your phone") }}
+    {% for error in form.phone.errors %}
+    <div class="invalid-feedback">
+        {{ error }}
+    </div>
+    {% endfor %}
+    {% else %}
+    {{ form.phone(class="form-control", placeholder="Enter your phone") }}
+    {% endif %}
 </div>
 
 <div class="mb-3">
-  {{ form.email.label(class="form-label") }}
-  {% if form.email.errors %}
-  {{ form.email(class="form-control is-invalid", placeholder="Enter your email") }}
-  {% for error in form.email.errors %}
-  <div class="invalid-feedback">
-    {{ error }}
-  </div>
-  {% endfor %}
-  {% else %}
-  {{ form.email(class="form-control", placeholder="Enter your email") }}
-  {% endif %}
+    {{ form.email.label(class="form-label") }}
+    {% if form.email.errors %}
+    {{ form.email(class="form-control is-invalid", placeholder="Enter your email") }}
+    {% for error in form.email.errors %}
+    <div class="invalid-feedback">
+        {{ error }}
+    </div>
+    {% endfor %}
+    {% else %}
+    {{ form.email(class="form-control", placeholder="Enter your email") }}
+    {% endif %}
 </div>
 
 <div class="mb-3">
-  {{ form.discipline.label(class="form-label") }}
-  {% for subfield in form.discipline %}
-  <div class="form-check">
-    {{ subfield(class="form-check-input") }}
-    {{ subfield.label(class="form-check-label") }}
-  </div>
-  {% endfor %}
+    {{ form.discipline.label(class="form-label") }}
+    {% for subfield in form.discipline %}
+    <div class="form-check">
+        {{ subfield(class="form-check-input") }}
+        {{ subfield.label(class="form-check-label") }}
+    </div>
+    {% endfor %}
 </div>
 
 <div class="mb-3">
-  {{ form.course.label(class="form-label") }}
-  {% for subfield in form.course %}
-  <div class="form-check">
-    {{ subfield(class="form-check-input") }}
-    {{ subfield.label(class="form-check-label") }}
-  </div>
-  {% endfor %}
+    {{ form.course.label(class="form-label") }}
+    {% for subfield in form.course %}
+    <div class="form-check">
+        {{ subfield(class="form-check-input") }}
+        {{ subfield.label(class="form-check-label") }}
+    </div>
+    {% endfor %}
 </div>
 
 <div class="d-grid">
-  {{ form.submit(class="btn btn-primary") }}
+    {{ form.submit(class="btn btn-primary") }}
 </div>

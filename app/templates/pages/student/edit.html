@@ -6,19 +6,19 @@
 
 <div class="my-5">
 
-  <div class="d-grid gap-2 mb-2 d-md-block">
-    <a href="{{ url_for('main.student') }}" class="btn btn-secondary btn-sm">Back students</a>
-  </div>
+    <div class="d-grid gap-2 mb-2 d-md-block">
+        <a href="{{ url_for('main.student') }}" class="btn btn-secondary btn-sm">Back students</a>
+    </div>
 
-  <h2 class="mb-3 text-center text-body-emphasis">Edit a student</h2>
+    <h2 class="mb-3 text-center text-body-emphasis">Edit a student</h2>
 
-  <form class="m-auto" method="POST" action="{{ url_for('main.student_edit', id=student.id) }}" novalidate>
-    
-    {{ form.hidden_tag() }}
+    <form class="m-auto" method="POST" action="{{ url_for('main.student_edit', id=student.id) }}" novalidate>
 
-    {% include 'pages/student/form.html' %}
+        {{ form.hidden_tag() }}
 
-  </form>
+        {% include 'pages/student/form.html' %}
+
+    </form>
 
 </div>
 

@@ -148,8 +148,7 @@ def add_data_from_related_tables(form: TeacherForm, teacher: Teacher):
     """
   
     # Clear existing relationships
-    TeacherDiscipline.query.filter_by(teacher_id=teacher.id).delete()
-    TeacherCourse.query.filter_by(teacher_id=teacher.id).delete()
+    remove_data_from_related_tables(teacher)
 
     # Add new relationships based on form data
     for disciplineId, courseId in zip_longest(
